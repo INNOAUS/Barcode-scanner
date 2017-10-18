@@ -34,26 +34,26 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class ScanActivity extends AppCompatActivity {
     public static final String EXTRA_RESULT = "scan_result";
 
-    BarcodeDetector detector;
-    CameraPreview preview;
-    FrameLayout previewLayout;
-    LinkedBlockingQueue<byte[]> frames;
+    private BarcodeDetector detector;
+    private CameraPreview preview;
+    private FrameLayout previewLayout;
+    private LinkedBlockingQueue<byte[]> frames;
 
-    ScanThread scanThread;
-    Camera camera;
-    Camera.Size previewSize;
-    private GraphicOverlay<BarcodeGraphic> mGraphicOverlay;
+    private ScanThread scanThread;
+    private Camera camera;
+    private Camera.Size previewSize;
+    private GraphicOverlay<BarcodeGraphic> graphicOverlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
-        mGraphicOverlay = (GraphicOverlay<BarcodeGraphic>) findViewById(R.id.graphic_overlay);
-        BarcodeTrackerFactory barcodeFactory = new BarcodeTrackerFactory(mGraphicOverlay);
+        graphicOverlay = (GraphicOverlay<BarcodeGraphic>) findViewById(R.id.graphic_overlay);
+        BarcodeTrackerFactory barcodeFactory = new BarcodeTrackerFactory(graphicOverlay);
 
         detector = new BarcodeDetector.Builder(this)
-                .setBarcodeFormats(Barcode.DATA_MATRIX | Barcode.QR_CODE | Barcode.CODE_128)
+                .setBarcodeFormats(Barcode.DATA_MATRIX | Barcode.QR_CODE | Barcode.CODE_128 | Barcode.CODE_39)
                 .build();
         detector.setProcessor(
                 new MultiProcessor.Builder<>(barcodeFactory).build());
@@ -99,14 +99,14 @@ public class ScanActivity extends AppCompatActivity {
                 scanThread.start();
             }
 
-            if (mGraphicOverlay != null) {
+            if (graphicOverlay != null) {
                 Size size = new Size(previewWidth, previewHeight);
                 int min = Math.min(size.getWidth(), size.getHeight());
                 int max = Math.max(size.getWidth(), size.getHeight());
                 // Swap width and height sizes when in portrait, since it will be rotated by
                 // 90 degrees
-                mGraphicOverlay.setCameraInfo(min, max, Camera.CameraInfo.CAMERA_FACING_BACK);
-                mGraphicOverlay.clear();
+                graphicOverlay.setCameraInfo(min, max, Camera.CameraInfo.CAMERA_FACING_BACK);
+                graphicOverlay.clear();
             }
         }
 

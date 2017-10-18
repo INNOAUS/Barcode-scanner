@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Barcode Scanner Sample");
         setContentView(R.layout.activity_main);
-
         findViewById(R.id.button_scan).setOnClickListener(this);
         tvResult = (TextView) findViewById(R.id.text_result);
     }
