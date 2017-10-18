@@ -15,8 +15,9 @@ import android.widget.Toast;
 import com.innoaus.barcodescanner.ScanActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
-    TextView tvResult;
+    private final int REQUEST_SCAN = 9800;
+    private final int PERMISSIONS_REQUEST_CAMERA = 200;
+    private TextView tvResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +37,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void startScan() {
         Intent intent = new Intent(this, ScanActivity.class);
-        startActivityForResult(intent, ScanActivity.REQUEST_SCAN);
+        startActivityForResult(intent, REQUEST_SCAN);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ScanActivity.REQUEST_SCAN && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_SCAN && resultCode == RESULT_OK) {
             if (data != null) {
                 String scanResult = data.getStringExtra(ScanActivity.EXTRA_RESULT);
                 tvResult.setText(scanResult);
@@ -50,9 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    final int PERMISSIONS_REQUEST_CAMERA = 201;
-
-    public void checkPermission() {
+    private void checkPermission() {
         int result = checkSelf(Manifest.permission.CAMERA);
         if (result != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSIONS_REQUEST_CAMERA);

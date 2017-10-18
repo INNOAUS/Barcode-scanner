@@ -32,7 +32,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ScanActivity extends AppCompatActivity {
-    public static final int REQUEST_SCAN = 9800;
     public static final String EXTRA_RESULT = "scan_result";
 
     BarcodeDetector detector;
