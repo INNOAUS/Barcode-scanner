@@ -1,6 +1,12 @@
 ## Android Simple Barcode Scanner 
 ScanActivity using Google Barcode Detector
 
+## Preview
+<p>
+    <img src="https://github.com/INNOAUS/barcode-scanner/blob/master/sample1.png?raw=true" height="350"/>
+    <img src="https://github.com/INNOAUS/barcode-scanner/blob/master/sample2.png?raw=true" height="350"/>
+</p>
+
 ## References / 참조
 * Google Mobile Vision: https://developers.google.com/vision/android/barcodes-overview
 * Google Barcode Detection Codelab: https://codelabs.developers.google.com/codelabs/bar-codes/#0
