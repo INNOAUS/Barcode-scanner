@@ -1,7 +1,14 @@
 package com.innoaus.barcodelist;
 
+import android.util.Log;
+
+import com.google.android.gms.vision.barcode.Barcode;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by ryusei on 20/10/2017.
@@ -9,24 +16,34 @@ import java.util.Date;
 
 public class BarcodeItem {
     String result;
-    String format;
+    int format;
     String timestamp;
 
-    public BarcodeItem() {
-    }
-
     // added from user view
-    public BarcodeItem(String r, String f) {
+    public BarcodeItem(String r, int f) {
         result = r;
         format = f;
-        Date currentTime = Calendar.getInstance().getTime();
-        timestamp = currentTime.toString();
+        timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
     }
 
     // added from db
-    public BarcodeItem(String r, String f, String t) {
+    public BarcodeItem(String r, int f, String t) {
         result = r;
         format = f;
         timestamp = t;
+    }
+
+    public String getFormat() {
+        switch (format) {
+            case Barcode.CODE_39:
+                return "CODE 39";
+            case Barcode.CODE_128:
+                return "CODE 128";
+            case Barcode.QR_CODE:
+                return "QR CODE";
+            case Barcode.DATA_MATRIX:
+                return "DATA MATRIX";
+        }
+        return "";
     }
 }

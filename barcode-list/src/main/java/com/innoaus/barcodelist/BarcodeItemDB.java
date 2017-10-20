@@ -31,7 +31,7 @@ public class BarcodeItemDB {
     private static final String COLUMN_FORMAT = "format";
     private static final String COLUMN_TIMESTAMP = "timestamp";
 
-    private static final String QUERY_DATABASE_CREATE = String.format("create table if not exists %s (%s integer primary key autoincrement, %s text not null, %s text, %s text)",
+    private static final String QUERY_DATABASE_CREATE = String.format("create table if not exists %s (%s integer primary key autoincrement, %s text not null, %s integer, %s text)",
             TABLE_NAME, COLUMN_ID, COLUMN_RESULT, COLUMN_FORMAT, COLUMN_TIMESTAMP);
     private final String QUERY1 = "";
 
@@ -128,7 +128,7 @@ public class BarcodeItemDB {
             for (int i = 0; i < count; i++) {
                 cursor.moveToPosition(i);
                 String result = cursor.getString(cursor.getColumnIndex(COLUMN_RESULT));
-                String format = cursor.getString(cursor.getColumnIndex(COLUMN_FORMAT));
+                int format = cursor.getInt(cursor.getColumnIndex(COLUMN_FORMAT));
                 String timestamp = cursor.getString(cursor.getColumnIndex(COLUMN_TIMESTAMP));
                 BarcodeItem item = new BarcodeItem(result, format, timestamp);
                 items.add(item);

@@ -2,12 +2,15 @@ package com.innoaus.barcodelist;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.android.gms.vision.barcode.Barcode;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     private Context context;
@@ -56,6 +59,29 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         BarcodeItem item = itemManager.getItems().get(position);
         holder.textName.setText(item.result);
         holder.textMemo.setText(item.timestamp);
+
+        String iconName = getIconName(item.format);
+        Log.d("hello", "getIconName: " + item.format);
+        Log.d("hello", "iconName: " + iconName);
+        if (iconName == null || iconName.equals("")) {
+            iconName = "box";
+        }
+        int res = context.getResources().getIdentifier(iconName, "drawable", context.getPackageName());
+        holder.image.setImageDrawable(context.getResources().getDrawable(res));
+    }
+
+    public String getIconName(int format) {
+        switch (format) {
+            case Barcode.CODE_128:
+            case Barcode.CODE_39:
+                return "barcode";
+            case Barcode.QR_CODE:
+                return "qrcode";
+            case Barcode.DATA_MATRIX:
+                return "datamatrix";
+            default:
+                return "box";
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -31,7 +31,7 @@ public class BarcodeItemManager {
         loadItems();
     }
 
-    public void addItem(String result, String format) {
+    public void addItem(String result, int format) {
         BarcodeItem item = new BarcodeItem(result, format);
         long ret = db.add(item);
         log("ret: " + ret);

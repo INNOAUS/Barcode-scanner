@@ -33,6 +33,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ScanActivity extends AppCompatActivity {
     public static final String EXTRA_RESULT = "scan_result";
+    public static final String EXTRA_FORMAT = "format";
 
     private BarcodeDetector detector;
     private CameraPreview preview;
@@ -197,6 +198,7 @@ public class ScanActivity extends AppCompatActivity {
                                     public void run() {
                                         terminate();
                                         Intent data = new Intent();
+                                        data.putExtra(EXTRA_FORMAT, barcode.format);
                                         data.putExtra(EXTRA_RESULT, barcode.rawValue);
                                         setResult(RESULT_OK, data);
                                         finish();

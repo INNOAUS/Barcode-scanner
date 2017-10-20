@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.barcode.Barcode;
 import com.innoaus.barcodescanner.ScanActivity;
 
 public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener {
@@ -73,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
         menu.getItem(0).setOnMenuItemClickListener(this);
         return super.onCreateOptionsMenu(menu);
     }
-
 
     @Override
     protected void onResume() {
@@ -140,7 +140,8 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
         if (requestCode == REQUEST_SCAN && resultCode == RESULT_OK) {
             if (data != null) {
                 String scanResult = data.getStringExtra(ScanActivity.EXTRA_RESULT);
-                itemManager.addItem(scanResult, "qrcode");
+                int format = data.getIntExtra(ScanActivity.EXTRA_FORMAT, -1);
+                itemManager.addItem(scanResult, format);
                 listAdapter.notifyDataSetChanged();
             }
         } else {
