@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        itemManager = BarcodeItemManager.getInstance();
+        itemManager = BarcodeItemManager.getInstance(this);
 
         listView = (RecyclerView) findViewById(R.id.list_main);
         listLayoutManager = new LinearLayoutManager(this);
@@ -129,10 +129,8 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        log("1");
         if (requestCode == REQUEST_SCAN && resultCode == RESULT_OK) {
             if (data != null) {
-                log("2");
                 String scanResult = data.getStringExtra(ScanActivity.EXTRA_RESULT);
                 itemManager.addItem(scanResult, "qrcode");
                 listAdapter.notifyDataSetChanged();

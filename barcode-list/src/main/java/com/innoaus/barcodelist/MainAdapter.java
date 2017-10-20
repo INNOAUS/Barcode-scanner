@@ -34,7 +34,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     // Provide a suitable constructor (depends on the kind of dataset)
     public MainAdapter(Context context) {
         this.context = context;
-        itemManager = BarcodeItemManager.getInstance();
+        itemManager = BarcodeItemManager.getInstance(context);
     }
 
     // Create new views (invoked by the layout manager)

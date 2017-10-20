@@ -1,5 +1,8 @@
 package com.innoaus.barcodelist;
 
+import android.content.Context;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,26 +14,32 @@ import java.util.Date;
 public class BarcodeItemManager {
     private static BarcodeItemManager instance;
 
-    synchronized public static BarcodeItemManager getInstance() {
+    synchronized public static BarcodeItemManager getInstance(Context context) {
         if (instance == null) {
-            instance = new BarcodeItemManager();
+            instance = new BarcodeItemManager(context);
         }
         return instance;
     }
 
     ArrayList<BarcodeItem> items;
+    Context context;
+    BarcodeItemDB db;
 
-    private BarcodeItemManager() {
+    private BarcodeItemManager(Context context) {
         items = new ArrayList<>();
+        db = new BarcodeItemDB(context);
+        loadItems();
     }
 
     public void addItem(String result, String format) {
-        BarcodeItem item = new BarcodeItem();
-        item.result = result;
-        Date currentTime = Calendar.getInstance().getTime();
-        item.timestamp = currentTime.toString();
-        item.format = format;
+        BarcodeItem item = new BarcodeItem(result, format);
+        long ret = db.add(item);
+        log("ret: " + ret);
         items.add(item);
+    }
+
+    private void loadItems() {
+        items = db.getAllData();
     }
 
     public ArrayList<BarcodeItem> getItems() {
@@ -41,5 +50,9 @@ public class BarcodeItemManager {
         if (items == null)
             return 0;
         return items.size();
+    }
+
+    private void log(String m) {
+        Log.d("barcode-list", "BarcodeItemManager@@ " + m);
     }
 }
