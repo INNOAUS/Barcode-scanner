@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
         listView.addOnItemTouchListener(new RecyclerItemClickListener(this, listView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                log("clipboard");
                 String text = itemManager.getItemText(position);
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("barcode-list", text);

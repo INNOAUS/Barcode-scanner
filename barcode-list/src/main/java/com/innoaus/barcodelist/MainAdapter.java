@@ -61,8 +61,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         holder.textMemo.setText(item.timestamp);
 
         String iconName = getIconName(item.format);
-        Log.d("hello", "getIconName: " + item.format);
-        Log.d("hello", "iconName: " + iconName);
         if (iconName == null || iconName.equals("")) {
             iconName = "box";
         }

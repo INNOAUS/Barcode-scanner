@@ -84,13 +84,6 @@ public class BarcodeItemDB {
         return db.insert(TABLE_NAME, null, values);
     }
 
-//    public int update(int dbkey, String data) {
-//        ContentValues values = new ContentValues();
-//        values.put(COLUMN_RESULT, data);
-//        String whereClause = COLUMN_ID + " = " + DatabaseUtils.sqlEscapeString(String.valueOf(dbkey));
-//        return db.update(TABLE_NAME, values, whereClause, null);
-//    }
-
     public boolean delete(int columnId) {
         String whereClause = String.format("%s=%d", COLUMN_ID, columnId);
         return (db.delete(TABLE_NAME, whereClause, null) > 0);
