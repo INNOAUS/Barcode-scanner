@@ -1,6 +1,8 @@
 package com.innoaus.barcodelist;
 
 import android.Manifest;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -48,6 +50,12 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
             @Override
             public void onItemClick(View view, int position) {
                 log("clipboard");
+                String text = itemManager.getItemText(position);
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("barcode-list", text);
+                clipboard.setPrimaryClip(clip);
+
+                Toast.makeText(MainActivity.this, "Copied", Toast.LENGTH_SHORT).show();
             }
 
             @Override

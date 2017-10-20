@@ -42,6 +42,10 @@ public class BarcodeItemManager {
         items = db.getAllData();
     }
 
+    public String getItemText(int position) {
+        return items.get(position).result;
+    }
+
     public ArrayList<BarcodeItem> getItems() {
         return items;
     }
