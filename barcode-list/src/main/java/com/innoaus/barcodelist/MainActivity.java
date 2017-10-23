@@ -60,10 +60,6 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
             }
 
             @Override
-            public void onLongItemClick(View view, int position) {
-            }
-
-            @Override
             public void onItemSwipeLeft(int position) {
                 itemManager.removeItem(position);
                 listAdapter.notifyItemRemoved(position);

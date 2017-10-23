@@ -15,8 +15,6 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
     public interface OnItemClickListener {
         public void onItemClick(View view, int position);
 
-        public void onLongItemClick(View view, int position);
-
         public void onItemSwipeLeft(int position);
 
         public void onItemMove(int fromPosition, int toPosition);
@@ -57,7 +55,6 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
                 if (child != null && mListener != null) {
                     RecyclerView.ViewHolder holder = recyclerView.findContainingViewHolder(child);
                     itemTouchHelper.startDrag(holder);
-                    //mListener.onLongItemClick(child, recyclerView.getChildAdapterPosition(child));
                 }
             }
         });
