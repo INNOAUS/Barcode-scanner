@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -78,6 +79,17 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
                 }
                 listAdapter.notifyItemMoved(fromPosition, toPosition);
             }
+
+            @Override
+            public void onItemSelected(RecyclerView.ViewHolder viewHolder) {
+                viewHolder.itemView.setBackgroundColor(Color.LTGRAY);
+            }
+
+            @Override
+            public void onItemClear(RecyclerView.ViewHolder viewHolder) {
+                viewHolder.itemView.setBackgroundColor(0);
+            }
+
         }));
         listAdapter = new MainAdapter(this);
         listView.setAdapter(listAdapter);

@@ -18,12 +18,16 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
         public void onItemSwipeLeft(int position);
 
         public void onItemMove(int fromPosition, int toPosition);
+
+        public void onItemSelected(RecyclerView.ViewHolder viewHolder);
+
+        public void onItemClear(RecyclerView.ViewHolder viewHolder);
     }
 
     GestureDetector mGestureDetector;
     ItemTouchHelper itemTouchHelper;
 
-    public RecyclerItemClickListener(Context context, final RecyclerView recyclerView, OnItemClickListener listener) {
+    public RecyclerItemClickListener(Context context, final RecyclerView recyclerView, final OnItemClickListener listener) {
         mListener = listener;
         itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT) {
             @Override
@@ -40,7 +44,22 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
                     mListener.onItemSwipeLeft(position);
                 }
             }
+
+            @Override
+            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+                if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
+                    mListener.onItemSelected(viewHolder);
+                }
+                super.onSelectedChanged(viewHolder, actionState);
+            }
+
+            @Override
+            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+                mListener.onItemClear(viewHolder);
+            }
         });
+
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
