@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,6 +61,26 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
 
             @Override
             public void onLongItemClick(View view, int position) {
+            }
+
+            @Override
+            public void onItemSwipeLeft(int position) {
+                itemManager.removeItem(position);
+                listAdapter.notifyItemRemoved(position);
+            }
+
+            @Override
+            public void onItemMove(int fromPosition, int toPosition) {
+                if (fromPosition < toPosition) {
+                    for (int i = fromPosition; i < toPosition; i++) {
+                        itemManager.swap(i, i + 1);
+                    }
+                } else {
+                    for (int i = fromPosition; i > toPosition; i--) {
+                        itemManager.swap(i, i - 1);
+                    }
+                }
+                listAdapter.notifyItemMoved(fromPosition, toPosition);
             }
         }));
         listAdapter = new MainAdapter(this);

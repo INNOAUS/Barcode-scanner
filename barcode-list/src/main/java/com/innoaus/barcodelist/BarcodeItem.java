@@ -15,19 +15,22 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 
 public class BarcodeItem {
+    long columnId;
     String result;
     int format;
     String timestamp;
 
     // added from user view
     public BarcodeItem(String r, int f) {
+        columnId = -1;
         result = r;
         format = f;
         timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
     }
 
     // added from db
-    public BarcodeItem(String r, int f, String t) {
+    public BarcodeItem(long cid, String r, int f, String t) {
+        columnId = cid;
         result = r;
         format = f;
         timestamp = t;

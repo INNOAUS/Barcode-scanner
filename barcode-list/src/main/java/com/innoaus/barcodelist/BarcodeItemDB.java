@@ -84,8 +84,8 @@ public class BarcodeItemDB {
         return db.insert(TABLE_NAME, null, values);
     }
 
-    public boolean delete(int columnId) {
-        String whereClause = String.format("%s=%d", COLUMN_ID, columnId);
+    public boolean delete(long columnId) {
+        String whereClause = String.format(Locale.getDefault(), "%s=%d", COLUMN_ID, columnId);
         return (db.delete(TABLE_NAME, whereClause, null) > 0);
     }
     /////////////////////////////////////////////////////////////
@@ -120,10 +120,11 @@ public class BarcodeItemDB {
             int count = cursor.getCount();
             for (int i = 0; i < count; i++) {
                 cursor.moveToPosition(i);
+                long columnId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
                 String result = cursor.getString(cursor.getColumnIndex(COLUMN_RESULT));
                 int format = cursor.getInt(cursor.getColumnIndex(COLUMN_FORMAT));
                 String timestamp = cursor.getString(cursor.getColumnIndex(COLUMN_TIMESTAMP));
-                BarcodeItem item = new BarcodeItem(result, format, timestamp);
+                BarcodeItem item = new BarcodeItem(columnId, result, format, timestamp);
                 items.add(item);
             }
         }

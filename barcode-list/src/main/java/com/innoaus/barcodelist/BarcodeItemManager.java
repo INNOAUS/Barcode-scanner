@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -34,6 +35,7 @@ public class BarcodeItemManager {
     public void addItem(String result, int format) {
         BarcodeItem item = new BarcodeItem(result, format);
         long ret = db.add(item);
+        item.columnId = ret;
         items.add(item);
     }
 
@@ -53,6 +55,16 @@ public class BarcodeItemManager {
         if (items == null)
             return 0;
         return items.size();
+    }
+
+    public void swap(int from, int to) {
+        Collections.swap(items, from, to);
+    }
+
+    public void removeItem(int position) {
+        BarcodeItem item = items.get(position);
+        db.delete(item.columnId);
+        items.remove(item);
     }
 
     private void log(String m) {
